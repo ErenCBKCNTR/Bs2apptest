@@ -1,6 +1,9 @@
 {
-  "name": "Dart/Flutter Code Assistant",
-  "description": "An assistant to help review and write Dart/Flutter code.",
-  "requestFramePermissions": [],
+  "name": "Blind Social",
+  "description": "Görme engelliler için %100 erişilebilir, WhatsApp sadeliğinde iletişim ağı.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
   "majorCapabilities": []
 }
