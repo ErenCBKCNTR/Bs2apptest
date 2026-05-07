@@ -1,0 +1,6 @@
+{
+  "name": "Dart/Flutter Code Assistant",
+  "description": "An assistant to help review and write Dart/Flutter code.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
