@@ -1,0 +1,2014 @@
+[
+  {
+    "id": "_pb_users_auth_",
+    "name": "users",
+    "type": "auth",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "users_avatar",
+        "name": "avatar",
+        "type": "file",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "mimeTypes": [
+            "image/jpeg",
+            "image/png",
+            "image/svg+xml",
+            "image/gif",
+            "image/webp"
+          ],
+          "thumbs": null,
+          "maxSelect": 1,
+          "maxSize": 5242880,
+          "protected": false
+        }
+      },
+      {
+        "system": false,
+        "id": "full_name_field",
+        "name": "full_name",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "dob_field",
+        "name": "dob",
+        "type": "date",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "is_online_field",
+        "name": "is_online",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "last_seen_field",
+        "name": "last_seen",
+        "type": "date",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "user_role_field",
+        "name": "role",
+        "type": "number",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 0,
+          "max": 10,
+          "noDecimal": true
+        }
+      },
+      {
+        "system": false,
+        "id": "last_ip_field",
+        "name": "last_ip",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "last_location_field",
+        "name": "last_location",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "quiz_score_field",
+        "name": "quiz_score",
+        "type": "number",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 0,
+          "max": null,
+          "noDecimal": true
+        }
+      },
+      {
+        "system": false,
+        "id": "hide_last_seen_field",
+        "name": "hide_last_seen",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "hide_birthday_field",
+        "name": "hide_birthday",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "",
+    "updateRule": "@request.auth.id = id",
+    "deleteRule": "id = @request.auth.id || (@request.auth.id != '' && @request.auth.role = 0)",
+    "options": {
+      "allowEmailAuth": true,
+      "allowOAuth2Auth": true,
+      "allowUsernameAuth": true,
+      "exceptEmailDomains": null,
+      "manageRule": null,
+      "minPasswordLength": 8,
+      "onlyEmailDomains": null,
+      "onlyVerified": false,
+      "requireEmail": false
+    }
+  },
+  {
+    "id": "col_feedback",
+    "name": "feedback",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "fb_user_id",
+        "name": "user_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "fb_category",
+        "name": "category",
+        "type": "select",
+        "required": true,
+        "options": {
+          "maxSelect": 1,
+          "values": [
+            "Request",
+            "Suggestion",
+            "Complaint",
+            "Thank you",
+            "Other"
+          ]
+        }
+      },
+      {
+        "system": false,
+        "id": "fb_subject",
+        "name": "subject",
+        "type": "text",
+        "required": true,
+        "options": {
+          "min": 3,
+          "max": 100
+        }
+      },
+      {
+        "system": false,
+        "id": "fb_message",
+        "name": "message",
+        "type": "text",
+        "required": true,
+        "options": {
+          "min": 10,
+          "max": 1000
+        }
+      },
+      {
+        "system": false,
+        "id": "fb_logs",
+        "name": "logs",
+        "type": "text",
+        "required": false,
+        "options": {
+          "max": 10000
+        }
+      }
+    ],
+    "listRule": "@request.auth.id != \"\" && @request.auth.role = 0",
+    "viewRule": "@request.auth.id != \"\" && @request.auth.role = 0",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": null,
+    "deleteRule": "@request.auth.id != \"\" && @request.auth.role = 0"
+  },
+  {
+    "id": "col_campaign_sources",
+    "name": "campaign_sources",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "cs_name",
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "options": {
+          "min": 1,
+          "max": 100
+        }
+      },
+      {
+        "system": false,
+        "id": "cs_url",
+        "name": "url",
+        "type": "text",
+        "required": true,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "cs_category",
+        "name": "category",
+        "type": "text",
+        "required": false,
+        "options": {}
+      }
+    ],
+    "listRule": "@request.auth.id != \"\"",
+    "viewRule": "@request.auth.id != \"\"",
+    "createRule": "@request.auth.id != \"\" && @request.auth.role = 0",
+    "updateRule": "@request.auth.id != \"\" && @request.auth.role = 0",
+    "deleteRule": "@request.auth.id != \"\" && @request.auth.role = 0"
+  },
+  {
+    "id": "col_new_campaigns",
+    "name": "campaigns",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "nc_source",
+        "name": "source_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "col_campaign_sources",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "nc_title",
+        "name": "title",
+        "type": "text",
+        "required": true,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "nc_category",
+        "name": "category",
+        "type": "text",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "nc_image",
+        "name": "image_url",
+        "type": "text",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "nc_camp_start",
+        "name": "camp_start",
+        "type": "text",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "nc_camp_end",
+        "name": "camp_end",
+        "type": "text",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "nc_usage_start",
+        "name": "usage_start",
+        "type": "text",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "nc_usage_end",
+        "name": "usage_end",
+        "type": "text",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "nc_katilim",
+        "name": "duration_text",
+        "type": "text",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "nc_usage",
+        "name": "usage_text",
+        "type": "text",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "nc_details",
+        "name": "details_json",
+        "type": "json",
+        "required": false,
+        "options": {
+          "maxSize": 2097152
+        }
+      },
+      {
+        "system": false,
+        "id": "nc_brands",
+        "name": "brands_json",
+        "type": "json",
+        "required": false,
+        "options": {
+          "maxSize": 2097152
+        }
+      },
+      {
+        "system": false,
+        "id": "nc_terms",
+        "name": "conditions_json",
+        "type": "json",
+        "required": false,
+        "options": {
+          "maxSize": 2097152
+        }
+      },
+      {
+        "system": false,
+        "id": "nc_actual_url",
+        "name": "actual_source_url",
+        "type": "text",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "nc_url",
+        "name": "original_url",
+        "type": "text",
+        "required": true,
+        "options": {}
+      }
+    ],
+    "listRule": "@request.auth.id != \"\"",
+    "viewRule": "@request.auth.id != \"\"",
+    "createRule": "@request.auth.id != \"\" && @request.auth.role = 0",
+    "updateRule": "@request.auth.id != \"\" && @request.auth.role = 0",
+    "deleteRule": "@request.auth.id != \"\" && @request.auth.role = 0"
+  },
+  {
+    "id": "collection_chats",
+    "name": "chats",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "chats_is_group",
+        "name": "is_group",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "chats_name",
+        "name": "name",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "chats_is_archived",
+        "name": "is_archived",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "chats_created_by",
+        "name": "created_by",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@collection.chat_participants.chat_id ?= id && @collection.chat_participants.user_id ?= @request.auth.id || created_by = @request.auth.id",
+    "viewRule": "@collection.chat_participants.chat_id ?= id && @collection.chat_participants.user_id ?= @request.auth.id || created_by = @request.auth.id",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "created_by = @request.auth.id",
+    "deleteRule": "@request.auth.id != \"\"",
+    "options": {}
+  },
+  {
+    "id": "collection_messages",
+    "name": "messages",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "msg_chat_id",
+        "name": "chat_id",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "collection_chats",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "msg_sender_id",
+        "name": "sender_id",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "msg_content",
+        "name": "content",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "msg_is_read",
+        "name": "is_read",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "msg_file",
+        "name": "file",
+        "type": "file",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "maxSize": 10485760,
+          "mimeTypes": [],
+          "thumbs": [],
+          "protected": false
+        }
+      },
+      {
+        "system": false,
+        "id": "msg_is_favorite",
+        "name": "is_favorite",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "msg_deleted_for",
+        "name": "deleted_for",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "msg_reactions",
+        "name": "reactions",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "msg_is_edited",
+        "name": "is_edited",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      }
+    ],
+    "indexes": [],
+    "listRule": "@collection.chat_participants.chat_id ?= chat_id && @collection.chat_participants.user_id ?= @request.auth.id || sender_id = @request.auth.id",
+    "viewRule": "@collection.chat_participants.chat_id ?= chat_id && @collection.chat_participants.user_id ?= @request.auth.id || sender_id = @request.auth.id",
+    "createRule": "@request.auth.id = sender_id",
+    "updateRule": "@request.auth.id = sender_id || (@collection.chat_participants.chat_id ?= chat_id && @collection.chat_participants.user_id ?= @request.auth.id && (content ~ 'CALL_' || content ~ 'VIDEO_'))",
+    "deleteRule": "@request.auth.id = sender_id",
+    "options": {}
+  },
+  {
+    "id": "collection_participants",
+    "name": "chat_participants",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "part_chat_id",
+        "name": "chat_id",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "collection_chats",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "part_user_id",
+        "name": "user_id",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "part_last_read",
+        "name": "last_read_message_id",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "collection_messages",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "part_is_hidden",
+        "name": "is_hidden",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "part_is_archived",
+        "name": "is_archived",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "part_is_pinned",
+        "name": "is_pinned",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "part_cleared_at",
+        "name": "cleared_at",
+        "type": "date",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "user_id = @request.auth.id || @collection.chat_participants.chat_id ?= chat_id && @collection.chat_participants.user_id ?= @request.auth.id",
+    "viewRule": "user_id = @request.auth.id || @collection.chat_participants.chat_id ?= chat_id && @collection.chat_participants.user_id ?= @request.auth.id",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "user_id = @request.auth.id",
+    "deleteRule": "user_id = @request.auth.id",
+    "options": {}
+  },
+  {
+    "id": "collection_posts",
+    "name": "posts",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "p_user_id",
+        "name": "user_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "p_content",
+        "name": "content",
+        "type": "text",
+        "required": true,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "p_likes",
+        "name": "likes_count",
+        "type": "number",
+        "required": false,
+        "options": {}
+      }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "user_id = @request.auth.id || (@request.auth.id != '' && @request.auth.role = 0)",
+    "deleteRule": "user_id = @request.auth.id || (@request.auth.id != '' && @request.auth.role = 0)"
+  },
+  {
+    "id": "collection_comments",
+    "name": "post_comments",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "pc_post_id",
+        "name": "post_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "collection_posts",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "pc_user_id",
+        "name": "user_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "pc_content",
+        "name": "content",
+        "type": "text",
+        "required": true,
+        "options": {}
+      }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "user_id = @request.auth.id || (@request.auth.id != '' && @request.auth.role = 0)",
+    "deleteRule": "user_id = @request.auth.id || post_id.user_id = @request.auth.id || (@request.auth.id != '' && @request.auth.role = 0)"
+  },
+  {
+    "id": "col_post_likes",
+    "name": "post_likes",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "pl_post_id",
+        "name": "post_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "collection_posts",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "pl_user_id",
+        "name": "user_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "user_id = @request.auth.id || (@request.auth.id != '' && @request.auth.role = 0)",
+    "deleteRule": "user_id = @request.auth.id || post_id.user_id = @request.auth.id || (@request.auth.id != '' && @request.auth.role = 0)"
+  },
+  {
+    "id": "col_voice_rooms",
+    "name": "voice_rooms",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "vr_name",
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "vr_created_by",
+        "name": "created_by",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "vr_is_active",
+        "name": "is_active",
+        "type": "bool",
+        "required": false,
+        "options": {}
+      }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "@request.auth.id != ''",
+    "deleteRule": "@request.auth.id != ''"
+  },
+  {
+    "id": "col_chat_servers",
+    "name": "chat_servers",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "cs_name",
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "presentable": true,
+        "unique": false,
+        "options": {
+          "min": 3,
+          "max": 50,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "cs_description",
+        "name": "description",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": 255,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "cs_creator",
+        "name": "creator",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "cs_admins",
+        "name": "admins",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": null,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "cs_capacity",
+        "name": "capacity",
+        "type": "number",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 1,
+          "max": 500,
+          "noDecimal": true
+        }
+      },
+      {
+        "system": false,
+        "id": "cs_avatar",
+        "name": "avatar",
+        "type": "file",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "mimeTypes": [
+            "image/jpeg",
+            "image/png",
+            "image/svg+xml",
+            "image/gif",
+            "image/webp"
+          ],
+          "thumbs": null,
+          "maxSelect": 1,
+          "maxSize": 5242880,
+          "protected": false
+        }
+      },
+      {
+        "system": false,
+        "id": "cs_can_members_create_rooms",
+        "name": "can_members_create_rooms",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "cs_password",
+        "name": "password",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "@request.auth.id != ''",
+    "deleteRule": "@request.auth.id != ''",
+    "options": {}
+  },
+  {
+    "id": "col_chat_server_rooms",
+    "name": "chat_server_rooms",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "csr_server",
+        "name": "server_id",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "col_chat_servers",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "csr_name",
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "presentable": true,
+        "unique": false,
+        "options": {
+          "min": 2,
+          "max": 50,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "csr_description",
+        "name": "description",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": 255,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "csr_type",
+        "name": "type",
+        "type": "select",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": [
+            "text",
+            "voice",
+            "hybrid"
+          ]
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "@request.auth.id != ''",
+    "deleteRule": "@request.auth.id != ''",
+    "options": {}
+  },
+  {
+    "id": "col_server_memberships",
+    "name": "server_memberships",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "sm_server",
+        "name": "server_id",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "col_chat_servers",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "sm_user",
+        "name": "user_id",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "sm_is_muted",
+        "name": "is_muted",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "sm_last_active",
+        "name": "last_active",
+        "type": "date",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE UNIQUE INDEX `idx_server_user` ON `server_memberships` (`server_id`, `user_id`)"
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "user_id = @request.auth.id",
+    "deleteRule": "user_id = @request.auth.id",
+    "options": {}
+  },
+  {
+    "id": "col_server_messages",
+    "name": "server_messages",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "svmsg_room_id",
+        "name": "room_id",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "col_chat_server_rooms",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "svmsg_sender_id",
+        "name": "sender_id",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "svmsg_content",
+        "name": "content",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "svmsg_file",
+        "name": "file",
+        "type": "file",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "maxSize": 10485760,
+          "mimeTypes": [],
+          "thumbs": [],
+          "protected": false
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id != '' && @collection.server_memberships.server_id ?= room_id.server_id && @collection.server_memberships.user_id ?= @request.auth.id",
+    "viewRule": "@request.auth.id != '' && @collection.server_memberships.server_id ?= room_id.server_id && @collection.server_memberships.user_id ?= @request.auth.id",
+    "createRule": "@request.auth.id = sender_id",
+    "updateRule": "@request.auth.id = sender_id",
+    "deleteRule": "@request.auth.id = sender_id",
+    "options": {}
+  },
+  {
+    "id": "col_vr_parts",
+    "name": "voice_room_participants",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "vrp_room",
+        "name": "room_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "col_voice_rooms",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "vrp_user",
+        "name": "user_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "@request.auth.id != ''",
+    "deleteRule": "@request.auth.id != ''"
+  },
+  {
+    "id": "col_quiz_questions",
+    "name": "quiz_questions",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "qq_question",
+        "name": "question",
+        "type": "text",
+        "required": true,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "qq_optA",
+        "name": "option_a",
+        "type": "text",
+        "required": true,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "qq_optB",
+        "name": "option_b",
+        "type": "text",
+        "required": true,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "qq_optC",
+        "name": "option_c",
+        "type": "text",
+        "required": true,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "qq_optD",
+        "name": "option_d",
+        "type": "text",
+        "required": true,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "qq_answer",
+        "name": "correct_answer",
+        "type": "select",
+        "required": true,
+        "options": {
+          "values": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "qq_diff",
+        "name": "difficulty",
+        "type": "number",
+        "required": false,
+        "options": {
+          "min": 1,
+          "max": 3
+        }
+      },
+      {
+        "system": false,
+        "id": "qq_audio",
+        "name": "audio_file",
+        "type": "file",
+        "required": false,
+        "options": {
+          "maxSelect": 1,
+          "maxSize": 5242880,
+          "mimeTypes": [
+            "audio/mpeg",
+            "audio/ogg",
+            "audio/wav",
+            "audio/mp4"
+          ]
+        }
+      }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != '' && @request.auth.role = 0",
+    "updateRule": "@request.auth.id != '' && @request.auth.role = 0",
+    "deleteRule": "@request.auth.id != '' && @request.auth.role = 0"
+  },
+  {
+    "id": "col_quiz_games",
+    "name": "quiz_games",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "qg_p1",
+        "name": "player1_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "qg_p2",
+        "name": "player2_id",
+        "type": "relation",
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "qg_status",
+        "name": "status",
+        "type": "select",
+        "required": true,
+        "options": {
+          "values": [
+            "waiting",
+            "active",
+            "finished"
+          ],
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "qg_turn",
+        "name": "current_turn_id",
+        "type": "relation",
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "qg_p1s",
+        "name": "player1_score",
+        "type": "number",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "qg_p2s",
+        "name": "player2_score",
+        "type": "number",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "qg_qindex",
+        "name": "current_question_index",
+        "type": "number",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "qg_questions",
+        "name": "questions_json",
+        "type": "json",
+        "required": false,
+        "options": {
+          "maxSize": 2000000
+        }
+      },
+      {
+        "system": false,
+        "id": "qg_winner",
+        "name": "winner_id",
+        "type": "relation",
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "qg_is_single",
+        "name": "is_singleplayer",
+        "type": "bool",
+        "required": false,
+        "options": {}
+      }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "@request.auth.id != ''",
+    "deleteRule": "@request.auth.id != ''"
+  },
+  {
+    "id": "col_server_bans",
+    "name": "server_bans",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "sban_server",
+        "name": "server_id",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "col_chat_servers",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "sban_user",
+        "name": "user_id",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE UNIQUE INDEX `idx_server_ban` ON `server_bans` (`server_id`, `user_id`)"
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "@request.auth.id != ''",
+    "deleteRule": "@request.auth.id != ''",
+    "options": {}
+  },
+  {
+    "id": "col_app_settings",
+    "name": "app_settings",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "as_version",
+        "name": "current_version",
+        "type": "text",
+        "required": true,
+        "presentable": true,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "as_apk_url",
+        "name": "apk_url",
+        "type": "url",
+        "required": true,
+        "presentable": true,
+        "unique": false,
+        "options": {
+          "exceptDomains": null,
+          "onlyDomains": null
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": "@request.auth.role = 0",
+    "updateRule": "@request.auth.role = 0",
+    "deleteRule": "@request.auth.role = 0",
+    "options": {}
+  },
+  {
+    "id": "col_task_boards",
+    "name": "task_boards",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "tbd_name",
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "options": {
+          "min": 1,
+          "max": 100
+        }
+      },
+      {
+        "system": false,
+        "id": "tbd_desc",
+        "name": "description",
+        "type": "text",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "tbd_owner",
+        "name": "owner_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "tbd_members",
+        "name": "members",
+        "type": "relation",
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "maxSelect": null
+        }
+      },
+      {
+        "system": false,
+        "id": "tbd_editors",
+        "name": "editors",
+        "type": "relation",
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "maxSelect": null
+        }
+      },
+      {
+        "system": false,
+        "id": "tbd_fav",
+        "name": "favorited_by",
+        "type": "relation",
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "maxSelect": null
+        }
+      }
+    ],
+    "listRule": "owner_id = @request.auth.id || members ~ @request.auth.id",
+    "viewRule": "owner_id = @request.auth.id || members ~ @request.auth.id",
+    "createRule": "@request.auth.id != '' && owner_id = @request.auth.id",
+    "updateRule": "owner_id = @request.auth.id || members ~ @request.auth.id",
+    "deleteRule": "owner_id = @request.auth.id"
+  },
+  {
+    "id": "col_task_lists",
+    "name": "task_lists",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "tll_board",
+        "name": "board_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "col_task_boards",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "tll_name",
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "options": {
+          "min": 1,
+          "max": 100
+        }
+      },
+      {
+        "system": false,
+        "id": "tll_order",
+        "name": "order",
+        "type": "number",
+        "required": true,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "tll_colb",
+        "name": "collapsed_by",
+        "type": "relation",
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "maxSelect": null
+        }
+      },
+      {
+        "system": false,
+        "id": "tll_pinb",
+        "name": "pinned_by",
+        "type": "relation",
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "maxSelect": null
+        }
+      }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "@request.auth.id != ''",
+    "deleteRule": "@request.auth.id != ''"
+  },
+  {
+    "id": "col_task_items",
+    "name": "task_items",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "tsi_list",
+        "name": "list_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "col_task_lists",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "tsi_title",
+        "name": "title",
+        "type": "text",
+        "required": true,
+        "options": {
+          "min": 1,
+          "max": 200
+        }
+      },
+      {
+        "system": false,
+        "id": "tsi_desc",
+        "name": "description",
+        "type": "text",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "tsi_created",
+        "name": "created_by",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "tsi_assignees",
+        "name": "assignees",
+        "type": "relation",
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "maxSelect": null
+        }
+      },
+      {
+        "system": false,
+        "id": "tsi_due",
+        "name": "due_date",
+        "type": "date",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "tsi_order",
+        "name": "order",
+        "type": "number",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "tsi_completed",
+        "name": "is_completed",
+        "type": "bool",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "tsi_num",
+        "name": "task_number",
+        "type": "number",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "tsi_lbl",
+        "name": "labels",
+        "type": "json",
+        "required": false,
+        "options": {
+          "maxSize": 2000000
+        }
+      },
+      {
+        "system": false,
+        "id": "tsi_res",
+        "name": "resources",
+        "type": "json",
+        "required": false,
+        "options": {
+          "maxSize": 2000000
+        }
+      },
+      {
+        "system": false,
+        "id": "tsi_tlogs",
+        "name": "time_logs",
+        "type": "json",
+        "required": false,
+        "options": {
+          "maxSize": 2000000
+        }
+      },
+      {
+        "system": false,
+        "id": "tsi_start",
+        "name": "start_date",
+        "type": "date",
+        "required": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "tsi_voices",
+        "name": "voice_notes",
+        "type": "file",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "mimeTypes": [],
+          "thumbs": [],
+          "maxSelect": 3,
+          "maxSize": 10485760,
+          "protected": false
+        }
+      }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "@request.auth.id != ''",
+    "deleteRule": "@request.auth.id != ''"
+  },
+  {
+    "id": "col_task_checklists",
+    "name": "task_checklists",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "tck_task",
+        "name": "task_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "col_task_items",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "tck_title",
+        "name": "title",
+        "type": "text",
+        "required": true,
+        "options": {
+          "min": 1,
+          "max": 200
+        }
+      },
+      {
+        "system": false,
+        "id": "tck_comp",
+        "name": "is_completed",
+        "type": "bool",
+        "required": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "tck_order",
+        "name": "order",
+        "type": "number",
+        "required": true,
+        "options": {}
+      }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "@request.auth.id != ''",
+    "deleteRule": "@request.auth.id != ''"
+  },
+  {
+    "id": "col_task_comments",
+    "name": "task_comments",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "tcm_task",
+        "name": "task_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "col_task_items",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "tcm_user",
+        "name": "user_id",
+        "type": "relation",
+        "required": true,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": true,
+          "maxSelect": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "tcm_content",
+        "name": "content",
+        "type": "text",
+        "required": true,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "tcm_voice",
+        "name": "voice_note",
+        "type": "file",
+        "required": false,
+        "options": {
+          "maxSelect": 1,
+          "maxSize": 10485760
+        }
+      }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "user_id = @request.auth.id",
+    "deleteRule": "user_id = @request.auth.id"
+  }
+]
