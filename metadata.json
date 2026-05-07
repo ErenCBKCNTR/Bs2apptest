@@ -1,9 +1,0 @@
-{
-  "name": "Blind Social",
-  "description": "Görme engelliler için %100 erişilebilir, WhatsApp sadeliğinde iletişim ağı.",
-  "requestFramePermissions": [
-    "camera",
-    "microphone"
-  ],
-  "majorCapabilities": []
-}
